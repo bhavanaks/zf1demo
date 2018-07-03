@@ -1,0 +1,84 @@
+<div class="card-header">
+    <i class="fa fa-table"></i> <a class="btn btn-primary" href="#" id="create-user">ADD</a>
+</div>
+<div class="card-body">
+  <div class="table-responsive">
+	<table class="table table-bordered" id="kidb" width="100%" cellspacing="0">
+	  <thead>
+		<tr>
+		  <th>Ticket</th>
+		  <th>Service line</th>
+		  <th>Description</th>
+		  <th>Solution</th>
+		  <th>Buddy</th>
+		  <th>Date</th>
+		</tr>
+	  </thead>
+	  <tfoot>
+		<tr>
+		  <th>Ticket</th>
+		  <th>Service line</th>
+		  <th>Description</th>
+		  <th>Solution</th>
+		  <th>Buddy</th>
+		  <th>Date</th>
+		</tr>
+	  </tfoot>
+	</table>
+  </div>
+</div>
+<div id="dialog-form" title="Add an entry">
+  <form>
+    <!-- > <fieldset>
+      <label for="ticket">Ticket</label>
+      <input type="text" name="ticket" id="ticket" value="" class="text ui-widget-content ui-corner-all">
+	  <br>
+      <label for="service_line">Service line</label>
+      <input type="text" name="service_line" id="service_line" value="" class="text ui-widget-content ui-corner-all">
+	  <br>
+      <label for="description">Description</label>
+      <input type="textarea " name="description" id="description" value="" class="textarea  ui-widget-content ui-corner-all">
+	  <br>
+ 
+      <!-- Allow form submission with keyboard without duplicating the dialog button 
+      <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+    </fieldset> -->
+	
+	<form id="entry" class="entry" method="post" action="">
+	<!-- Name -->
+	<div>
+		<label for="entry_ticket_number">Ticket:</label>
+		<input type="text" id="entry_ticket_number" name="ticket_number"></input>
+		<span class="error">This field is required</span>
+	</div>
+	<!-- Email -->
+	<div>
+		<label for="entry_serviceline_id">Service line:</label>
+		<select id="entry_serviceline_id" name="service_id"></select>
+		<span class="error">This field is required</span>				
+	</div>	
+	<div>
+		<label for="entry_category_id">Category:</label>
+		<select id="entry_category_id" name="category_id"></select>
+		<span class="error">This field is required</span>				
+	</div>		
+	<div>
+		<label for="entry_short_description">Short description</label>
+		<input type="text" id="entry_short_description" name="short_description"></input>
+		<span class="error">A valid email address is required</span>				
+	</div>			
+	<!-- Message -->
+	<div>
+		<label for="entry_description">Description:</label>
+		<textarea id="entry_description" name="description"></textarea>
+		<span class="error">This field is required</span>												
+	</div>	
+	<div>
+		<label for="entry_solution">Solution:</label>
+		<textarea id="entry_solution" name="solution"></textarea>
+		<span class="error">This field is required</span>												
+	</div>		
+</form>
+  </form>
+</div>
+
