@@ -15,25 +15,20 @@ set_include_path(implode(PATH_SEPARATOR, array(
     realpath(APPLICATION_PATH . '/../../Library'),
     get_include_path(),
 )));
-
-
-
-// $auth = Zend_Auth::getInstance();
-//     if (!$auth->hasIdentity()) {
-//         header('Location:/ourbank1/public/');
-//         }
-
-
-/** Zend_Application */
 require_once 'Zend/Application.php';  
-
-//Create application, bootstrap, and run
-$application = new Zend_Application(
-    APPLICATION_ENV, 
-    APPLICATION_PATH . '/configs/application.ini'
-);
-
-
-
+$url = $_SERVER['REQUEST_URI'];
+if (strpos($url, '/v1/') !== false) {
+    //Create application, bootstrap, and run
+	$application = new Zend_Application(
+		APPLICATION_ENV, 
+		APPLICATION_PATH . '/configs/restapplication.ini'
+	);
+} else {
+	//Create application, bootstrap, and run
+	$application = new Zend_Application(
+		APPLICATION_ENV, 
+		APPLICATION_PATH . '/configs/application.ini'
+	);
+}
 $application->bootstrap()
             ->run();
