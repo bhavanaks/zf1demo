@@ -5,6 +5,7 @@ class IndexController extends Zend_Controller_Action
     {
         //$this->view->title = "Management";
 		$date=date("y/m/d H:i:s");
+		$this->view->baseUrl = $this->view->baseUrl();
     }
 
     public function indexAction() 
@@ -34,37 +35,98 @@ class IndexController extends Zend_Controller_Action
 		}
 		
 		$kidb = new App_Model_Adm();
-        $data=$kidb->fetchAllKidb($search);
+		$columns = array(
+		    array( 'db' => 'id', 'dt' => 'id' ),
+		    array( 'db' => 'ticket_number', 'dt' => 'ticket_number' ),
+		    array( 'db' => 'serviceline_name',  'dt' => 'serviceline_name' ),
+		    array( 'db' => 'description',   'dt' => 'description' ),
+		    array( 'db' => 'solution',     'dt' => 'solution' ),
+		    array( 'db' => 'user_id',   'dt' => 'user_id' ),
+		    array( 'db' => 'last_updated',     'dt' => 'last_updated' ),
+		    
+		);
+		$order = $this->orderAction($this->getRequest()->getParams(),$columns);
+		
+		
+		$data=$kidb->fetchAllKidb($search,$this->_request->getQuery('start'),$this->_request->getQuery('length'),$order);
 		// Table's primary key
 		$primaryKey = 'id';
-		$columns = array(
-			array( 'db' => 'ticket_number', 'dt' => 'ticket_number' ),
-			array( 'db' => 'serviceline_name',  'dt' => 'serviceline_name' ),
-			array( 'db' => 'description',   'dt' => 'description' ),
-			array( 'db' => 'solution',     'dt' => 'solution' ),
-			array( 'db' => 'user_id',   'dt' => 'user_id' ),
-			array( 'db' => 'last_updated',     'dt' => 'last_updated' ),
-			
-		);
+		
 		
 		$finalData = array(
-			"draw"            => 1,
-			"recordsTotal"    => count($data),
+		    "draw"            => $this->_request->getQuery('draw'),
+			"recordsTotal"    => 11,
 			"recordsFiltered" => count($data),
 			"data"            => $this->dataoutputAction( $columns, $data ),
 		);
-		
-		//print_r($finalData);die();
 	    print(json_encode($finalData));
 		
+    }
+    /**
+     * Ordering
+     *
+     * Construct the ORDER BY clause for server-side processing SQL query
+     *
+     *  @param  array $request Data sent to server by DataTables
+     *  @param  array $columns Column information array
+     *  @return string SQL order by clause
+     */
+    public function orderAction ( $request, $columns )
+    {
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $order = '';
+        if ( isset($request['order']) && count($request['order']) ) {
+            $orderBy = array();
+            $dtColumns = self::pluckAction( $columns, 'dt' );
+            for ( $i=0, $ien=count($request['order']) ; $i<$ien ; $i++ ) {
+                // Convert the column index into the column data property
+                $columnIdx = intval($request['order'][$i]['column']);
+                $requestColumn = $request['columns'][$columnIdx];
+                $columnIdx = array_search( $requestColumn['data'], $dtColumns );
+                $column = $columns[ $columnIdx ];
+                if ( $requestColumn['orderable'] == 'true' ) {
+                    $dir = $request['order'][$i]['dir'] === 'asc' ?
+                    'ASC' :
+                    'DESC';
+                    $orderBy[] = '`'.$column['db'].'` '.$dir;
+                }
+            }
+            if ( count( $orderBy ) ) {
+                $order = 'ORDER BY '.implode(', ', $orderBy);
+            }
+        }
+        return $order;
+    }
+    public function pluckAction ( $a, $prop )
+    {
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $out = array();
+        for ( $i=0, $len=count($a) ; $i<$len ; $i++ ) {
+            $out[] = $a[$i][$prop];
+        }
+        return $out;
     }
 	public function addAction() 
     {
         $this->_helper->layout->disableLayout();
 		$this->_helper->viewRenderer->setNoRender(true);
-		$formData = $this->_request->getPost('data');
-		var_dump($formData);
-		die();
+		$formdata = json_decode($this->getRequest()->getRawBody());
+		//var_dump($formdata);
+		$data = array();
+		foreach ($formdata as $key => $jsons) { // This will search in the 2 jsons
+			$data[$jsons->name]=$jsons->value; 
+		}
+		//var_dump($data);
+		
+		$kidb = new App_Model_Adm();
+        $data=$kidb->addKedb($data);
+		$finalData = array(
+			"success" => true,
+			"message" => "record inserted"
+		);
+		print(json_encode($finalData));
     }
 	/**
 	 * Create the data output array for the DataTables rows
