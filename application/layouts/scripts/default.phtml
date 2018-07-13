@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
-  <title>Gokidb</title>
+  <title>KEDB</title>
   <!-- Bootstrap core CSS-->
   
   <link href="<?php  echo $this->baseUrl();?>/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -33,8 +33,8 @@
     <div class="container-fluid">
       <div class="card mb-3">
         <div id="pagecontent">
-        <?php echo $this->layout()->content; ?>
-    </div>
+			<?php echo $this->layout()->content; ?>
+		</div>
       </div>
     </div>
     <!-- /.container-fluid-->
@@ -43,25 +43,23 @@
     <?php echo $this->render('footer.phtml'); ?>
   </div>
    
-	<script src="<?php  echo $this->baseUrl();?>/js/jquery-3.3.1.js"></script>
     <!-- Bootstrap core JavaScript-->
-    <script src="<?php  echo $this->baseUrl();?>/vendor/jquery/jquery.min.js"></script>
-    <script src="<?php  echo $this->baseUrl();?>/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="<?php  echo $this->baseUrl();?>/vendor/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="<?php  echo $this->baseUrl();?>/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- Core plugin JavaScript-->
-    <script src="<?php  echo $this->baseUrl();?>/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script type="text/javascript" src="<?php  echo $this->baseUrl();?>/vendor/jquery-easing/jquery.easing.min.js"></script>
     <!-- Page level plugin JavaScript-->
-    <script src="<?php  echo $this->baseUrl();?>/vendor/datatables/jquery.dataTables.js"></script>
-    <script src="<?php  echo $this->baseUrl();?>/vendor/datatables/dataTables.bootstrap4.js"></script>
+    <script type="text/javascript" src="<?php  echo $this->baseUrl();?>/vendor/datatables/dataTables.bootstrap4.js"></script>
     <!-- Custom scripts for all pages-->
-    <script src="<?php  echo $this->baseUrl();?>/js/sb-admin.min.js"></script>
+    <script type="text/javascript" src="<?php  echo $this->baseUrl();?>/js/sb-admin.min.js"></script>
+	<script type="text/javascript" src="<?php  echo $this->baseUrl();?>/js/sb-admin-datatables.min.js"></script>
+
     <!-- Custom scripts for this page-->
-    <script src="<?php  echo $this->baseUrl();?>/js/jquery.dataTables.min.js"></script>
-    <script src="<?php  echo $this->baseUrl();?>/js/jquery-ui.js"></script>
-
-
-
-	<!-- KIDB -->
-	<script src="<?php  echo $this->baseUrl();?>/js/kidb.js"></script>
+	<!-- KEDB -->
+	<script type="text/javascript" src="<?php  echo $this->baseUrl();?>/js/jquery-ui.js"></script>
+	<script type="text/javascript" src="<?php  echo $this->baseUrl();?>/js/jquery.dataTables.min.js"></script>
+	
+	<script type="text/javascript" src="<?php  echo $this->baseUrl();?>/js/kedb.js"></script>
   </div>
 </body>
 
